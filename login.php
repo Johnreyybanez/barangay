@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<?php
+session_start();
+?>
+<head>
+    <meta charset="UTF-8">
+    <title>Barangay Information System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="img/bar.png">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Barangay Information System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: linear-gradient(135deg, #373838ff 0%, #313131ff 25%, #77797cff 50%, #2a2b2aff 75%, #979a9cff 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating background elements */
+        .bg-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 64px;
+            height: 64px;
+            top: 50%;
+            right: 0%;
+            animation-delay: -2s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 48px;
+            height: 48px;
+            bottom: 30%;
+            left: 0%;
+            animation-delay: -4s;
+        }
+
+        .floating-shape:nth-child(4) {
+            width: 96px;
+            height: 96px;
+            bottom: 10%;
+            right: 20%;
+            animation-delay: -1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Login Card Styles - Using Original Structure */
+        .login-container {
+            position: relative;
+            z-index: 10;
+            max-width: 390px;
+            width: 50%;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(209, 213, 219, 0.3);
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #dbbe3aff 0%, #545c30ff 100%);
+            border: none;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 0.5rem auto;
+            filter: drop-shadow(0 0 20px rgba(51, 51, 51, 0.3));
+        }
+
+        .card-title {
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .card-body {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Form Styles - Original Structure */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #343435ff;
+            margin-bottom: 0.25rem;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #242425ff;
+            z-index: 10;
+        }
+
+        .form-control, .form-select {
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: #2a2a2bff;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #1a1a1bff;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Button Styles - Original Structure */
+        .btn-login {
+            background: linear-gradient(135deg, #d6cc36ff 0%, #545c30ff 100%);
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(42, 42, 43, 0.3);
+        }
+
+        /* Back Link */
+        .back-link {
+            color: #323233ff;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #2f2f30ff;
+        }
+
+        /* Footer */
+        .footer-text {
+            color: white;
+            font-size: 0.875rem;
+            opacity: 0.75;
+            margin-top: 0.75rem;
+            text-align: center;
+        }
+
+        /* Custom Select Arrow */
+        .select-arrow {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3a3a3bff;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .login-container {
+                max-width: 95%;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            .card-header {
+                padding: 1.5rem 1.5rem 1rem 1.5rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Elements -->
+    <div class="bg-elements">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="card login-card">
+            <!-- Header -->
+            <div class="card-header">
+                <img src="img/bar.png" alt="Logo" class="mx-auto d-block mb-2 logo">
+                <h1 class="card-title">Barangay Information System</h1>
+            </div>
+
+            <!-- Login Form -->
+            <div class="card-body">
+                <form method="post">
+                    <!-- Username -->
+                    <div class="form-group">
+                        <label for="txt_username" class="form-label">Username</label>
+                        <div class="position-relative">
+                            <span class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input name="txt_username" type="text" id="txt_username" 
+                                placeholder="Enter your username" required
+                                class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div x-data="{ show: false }" class="form-group">
+                        <label for="txt_password" class="form-label">Password</label>
+                        <div class="position-relative">
+                            <span class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input :type="show ? 'text' : 'password'" name="txt_password" id="txt_password" 
+                                placeholder="Enter your password" required
+                                class="form-control">
+                            <button type="button" class="password-toggle" @click="show = !show">
+                                <i :class="show ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Role Selection -->
+                    <div class="form-group">
+                        <label for="role" class="form-label">Select Role</label>
+                        <div class="position-relative">
+                            <span class="input-icon">
+                                <i class="fas fa-user-tag"></i>
+                            </span>
+                            <select name="role" id="role" required class="form-select">
+                                <option value="">Choose your role</option>
+                                <option value="Admin">👑 Administrator</option>
+                                <option value="Clerk">📝 Clerk</option>
+                                <option value="Official">🏛️ Official</option>
+                            </select>
+                            <span class="select-arrow">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" name="btn_login" class="btn btn-login">
+                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    </button>
+
+                    <!-- Back Link -->
+                    <div class="text-center mt-3">
+                        <a href="index.php" class="back-link">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Back to Homepage
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-text">
+            <i class="fas fa-shield-alt me-1"></i>
+            Secure Login Portal
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- PHP Login Logic -->
+    <?php
+    include "pages/connection.php";
+
+    if (isset($_POST['btn_login'])) {
+        $username = mysqli_real_escape_string($con, $_POST['txt_username']);
+        $password = $_POST['txt_password'];
+        $selectedRole = $_POST['role'];
+
+        if (empty($selectedRole)) {
+            $_SESSION['error'] = "Please select a role.";
+        } else {
+            $query = "SELECT id, fullname, username, password_hash, role FROM tbluser WHERE username = ?";
+            $stmt = mysqli_prepare($con, $query);
+            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($row = mysqli_fetch_assoc($result)) {
+                if (password_verify($password, $row['password_hash'])) {
+                    if ($row['role'] === $selectedRole) {
+                        $_SESSION['id'] = $row['id'];
+                        $_SESSION['fullname'] = $row['fullname'];
+                        $_SESSION['username'] = $row['username'];
+                        $_SESSION['role'] = $row['role'];
+
+                        $roleRedirects = [
+                            'Admin' => 'pages/dashboard/dashboard.php',
+                            'Clerk' => 'pages/resident/resident.php',
+                            'Official' => 'pages/resident/resident.php'
+                        ];
+
+                        echo "<script>
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Welcome Back!',
+                                    text: 'Login successful as {$row['role']}',
+                                    timer: 2000,
+                                    showConfirmButton: false,
+                                    background: '#fff',
+                                    color: '#374151',
+                                    iconColor: '#10b981'
+                                }).then(() => {
+                                    window.location.href = '{$roleRedirects[$row['role']]}';
+                                });
+                              </script>";
+                        exit();
+                    } else {
+                        $_SESSION['error'] = "Selected role does not match your account permissions.";
+                    }
+                } else {
+                    $_SESSION['error'] = "Invalid password. Please try again.";
+                }
+            } else {
+                $_SESSION['error'] = "Username not found in our system.";
+            }
+            mysqli_stmt_close($stmt);
+        }
+        mysqli_close($con);
+    }
+
+    if (isset($_SESSION['error'])) {
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: '{$_SESSION['error']}',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    background: '#fff',
+                    color: '#374151',
+                    iconColor: '#ef4444'
+                });
+              </script>";
+        unset($_SESSION['error']);
+    }
+    ?>
+</body>
+</html>
